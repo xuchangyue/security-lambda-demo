@@ -14,4 +14,5 @@ Launch the provided AWS CloudFormation template using the AWS Console and provid
   | S3 Bucket            | The S3 bucket name you uploaded the Lambda ZIP to
   | S3 Key               | The S3 location of the Lambda ZIP. No leading slashes. (ex. Lambda.zip or controls/lambda.zip. )
   | Chime Hook URL       | The Chime webhook to send a message
-  | Chime User Login     | The user login to notify
+  | Chime User Login     | The user login to notify @
+  | Required AMI id      | The AMI id forced to use
