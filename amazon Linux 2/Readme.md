@@ -1,18 +1,15 @@
-Summary
+概要
 ========
-Amazon CloudWatch Events trigger this check when AWS CloudTrail logs EC2 API calls. Specifically, Amazon CloudWatch Events Rules monitoring AWS CloudTrail Logs, trigger based on an API call for "RunInstances". The trigger invokes AWS Lambda which runs the python script attached. The python script evaluates the instances's ami if is the required ami, if not, the instances will be terminated, and a chime message will be sent to the chime user.
+Amazon CloudWatch Events规则会监控EC2 API "RunInstances"的调用，当被调用时会触发Lambda函数，Lambda函数会检查启用实例使用的AMI Id是否和强制使用的AMI Id一致，如果不一致则降实例终止并chime通知用户。
 
-Deployment
+部署
 ==========
-
-To deploy this security control, upload the security control Lambda ZIP file to a location in Amazon S3. This location must be in the same region you intend to deploy the control.
-
-Launch the provided AWS CloudFormation template using the AWS Console and provide the following information:
-
+讲Lambda代码打包，上传到部署此模板同区域的S3桶中。
+启动CloudFormation模板，填入以下参数。
   | Parameter            | Description
   | -------------------- | --------------------------------------------------------------------------------------------------
-  | S3 Bucket            | The S3 bucket name you uploaded the Lambda ZIP to
-  | S3 Key               | The S3 location of the Lambda ZIP. No leading slashes. (ex. Lambda.zip or controls/lambda.zip. )
-  | Chime Hook URL       | The Chime webhook to send a message
-  | Chime User Login     | The user login to notify @
-  | Required AMI id      | The AMI id forced to use
+  | S3 Bucket            | 存放Lambda ZIP的S3桶
+  | S3 Key               | Lambda ZIP的S3 Key，例如Lambda.zip或controls/lambda.zip
+  | Chime Hook URL       | Chime room的Webhook URL
+  | Chime User Login     | 需要@提醒的用户login
+  | Required AMI Id      | 强制使用的AMI Id
