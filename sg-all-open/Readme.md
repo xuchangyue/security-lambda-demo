@@ -1,17 +1,14 @@
-Summary
+概要
 ========
-Amazon CloudWatch Events trigger this check when AWS CloudTrail logs EC2 API calls. Specifically, Amazon CloudWatch Events Rules monitoring AWS CloudTrail Logs, trigger based on an API call for "AuthorizeSecurityGroupIngress". The trigger invokes AWS Lambda which runs the python script attached. The python script evaluates the Source IP Address and CIDR range. If the CIDR range is 0.0.0.0/0 for IPv4, or ::/0 for IPv6, the Lambda function will send a violation notification.
+Amazon CloudWatch Events规则会监控EC2 API "AuthorizeSecurityGroupIngress"的调用，当被调用时会触发Lambda函数，Lambda函数会评估安全组的源IP和CIDR地址块范围。 如果CIDR是0.0.0.0/0或::/0, Lambda会发布警告信息给SNS topic，订阅此topic的邮箱会收到警告邮件。
 
-Deployment
+部署
 ==========
-
-To deploy this security control, upload the security control Lambda ZIP file to a location in Amazon S3. This location must be in the same region you intend to deploy the control.
-
-Launch the provided AWS CloudFormation template using the AWS Console and provide the following information:
-
+讲Lambda代码打包，上传到部署此模板同区域的S3桶中。
+启动CloudFormation模板，填入以下参数。
   | Parameter            | Description
   | -------------------- | --------------------------------------------------------------------------------------------------
-  | S3 Bucket            | The S3 bucket name you uploaded the Lambda ZIP to
-  | S3 Key               | The S3 location of the Lambda ZIP. No leading slashes. (ex. Lambda.zip or controls/lambda.zip. )
-  | Notification Email   | An email address where you would like violation notifications sent
-  | Logging Level        | Control the verbosity of the logs. INFO should only be used for debug
+  | S3 Bucket            | 存放Lambda ZIP的S3桶
+  | S3 Key               | Lambda ZIP的S3 Key，例如Lambda.zip或controls/lambda.zip
+  | Notification Email   | 接收警告邮件的邮箱地址
+  | Logging Level        | 日志级别， INFO应只用来debug
